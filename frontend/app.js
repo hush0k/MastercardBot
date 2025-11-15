@@ -13,14 +13,11 @@ const mockResponse = {
   
   const chat = document.getElementById("chat-container");
   const input = document.getElementById("user-input");
-  const resultsDiv = document.getElementById("results");
-  const tableEl = document.getElementById("table");
-  const sqlEl = document.getElementById("sql");
   
   function addMessage(text, sender) {
     const msg = document.createElement("div");
-    msg.textContent = text;
     msg.classList.add("msg", sender);
+    msg.innerHTML = text;
     chat.appendChild(msg);
     chat.scrollTop = chat.scrollHeight;
   }
@@ -37,20 +34,25 @@ const mockResponse = {
     setTimeout(() => {
       chat.removeChild(chat.lastChild);
       addMessage("Here are the top merchants:", "bot");
-      showResults(mockResponse);
+      showResultsInChat(mockResponse);
     }, 800);
   }
   
-  function showResults(data) {
-    resultsDiv.style.display = "block";
-    sqlEl.innerHTML = `<b>SQL:</b> ${data.sql}`;
+  function showResultsInChat(data) {
+    const botMsg = document.createElement("div");
+    botMsg.classList.add("msg", "bot");
   
-    let html = `<tr>${data.columns.map(col => `<th>${col}</th>`).join("")}</tr>`;
+    let html = `<p><b>SQL:</b> ${data.sql}</p>`;
+    html += `<table style="width:100%; border-collapse: collapse; margin-top: 6px;">`;
+    html += `<tr>${data.columns.map(col => `<th style="border:1px solid #ccc; padding:6px; text-align:left;">${col}</th>`).join("")}</tr>`;
     data.results.forEach(row => {
-      html += `<tr>${data.columns.map(col => `<td>${row[col]}</td>`).join("")}</tr>`;
+      html += `<tr>${data.columns.map(col => `<td style="border:1px solid #ccc; padding:6px;">${row[col]}</td>`).join("")}</tr>`;
     });
+    html += `</table>`;
   
-    tableEl.innerHTML = html;
+    botMsg.innerHTML = html;
+    chat.appendChild(botMsg);
+    chat.scrollTop = chat.scrollHeight;
   }
   
   document.getElementById("send-btn").addEventListener("click", sendMessage);
