@@ -4,7 +4,7 @@ services:
   # ML Service - text-to-SQL модель
   ml-service:
     build:
-      context: ./ml
+      context: ./model
       dockerfile: Dockerfile
     container_name: agentic-ml-service
     ports:
