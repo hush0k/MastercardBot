@@ -1,10 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Mastercard Chat bot</title>
+  <meta charset="UTF-8">
+  <title>Agentic Analyst</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header></header>
+  <header>
+    <img src="mc_symbol_rgb.png" alt="Logo" id="logo">
+    <span>Agentic Analyst</span>
+  </header>
+
+  <main>
+    <div id="chat-container"></div>
+
+    <div id="input">
+      <input id="user-input" placeholder="Ask a question about your data...">
+      <button id="send-btn">Send</button>
+    </div>
+
+    <section id="results">
+      <h3>Results</h3>
+      <div id="sql"></div>
+      <table id="table"></table>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
 </body>
 </html>

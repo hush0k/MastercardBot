@@ -1,0 +1,102 @@
+/* Общий стиль */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f7f7f7;
+    color: #333;
+  }
+  
+  /* Шапка */
+  header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #111;
+    color: white;
+    padding: 16px;
+    font-size: 20px;
+    font-weight: 600;
+  }
+  
+  #logo {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+  }
+  
+  /* Контейнер чата */
+  #chat-container {
+    height: 300px;
+    border: 1px solid #ddd;
+    margin: 20px auto;
+    width: 90%;
+    max-width: 700px;
+    background: white;
+    padding: 10px;
+    overflow-y: auto;
+    border-radius: 8px;
+  }
+  
+  /* Блок ввода */
+  #input {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 10px auto;
+    width: 90%;
+    max-width: 700px;
+  }
+  
+  #user-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+  }
+  
+  #user-input:focus {
+    border-color: #111;
+  }
+  
+  #send-btn {
+    padding: 10px 16px;
+    background: #EB001B;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  #send-btn:hover {
+    background: #c50015;
+  }
+  
+  /* Результаты */
+  #results {
+    width: 90%;
+    max-width: 700px;
+    margin: 20px auto;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    display: none;
+  }
+  
+  #results h3 {
+    margin-top: 0;
+  }
+  
+  #table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  #table td, #table th {
+    border: 1px solid #ccc;
+    padding: 8px;
+  }
+  
