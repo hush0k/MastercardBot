@@ -1,4 +1,3 @@
-
 const mockResponse = {
     question: "Top 5 merchants",
     sql: "SELECT merchant_name, SUM(amount) as revenue FROM transactions GROUP BY merchant_name ORDER BY revenue DESC LIMIT 5",
@@ -54,6 +53,6 @@ const mockResponse = {
     tableEl.innerHTML = html;
   }
   
-  document.getElementById("send-btn").onclick = sendMessage;
+  document.getElementById("send-btn").addEventListener("click", sendMessage);
   input.addEventListener("keypress", e => { if(e.key === "Enter") sendMessage(); });
   
