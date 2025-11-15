@@ -5,14 +5,17 @@ pydantic==2.5.0
 
 # ML библиотеки
 transformers==4.35.2
-torch==2.1.1
+torch>=2.0.0
 accelerate==0.25.0
 sentencepiece==0.1.99
+bitsandbytes>=0.41.0
+protobuf==4.25.1
 
 # Утилиты
 python-dotenv==1.0.0
 loguru==0.7.2
 requests==2.31.0
+pandas>=2.0.0
 
-# Опционально для оптимизации
-optimum==1.15.0
+# Дополнительно
+scipy>=1.11.0
