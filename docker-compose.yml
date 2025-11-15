@@ -10,11 +10,10 @@ services:
     ports:
       - "8001:8001"
     volumes:
-      - ./ml:/app
+      - ./model:/app
       - ml-models:/app/models
     environment:
-      - MODEL_NAME=NumbersStation/nsql-llama-2-7B
-      - MODEL_CACHE_DIR=/app/models
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
       - LOG_LEVEL=INFO
     healthcheck:
       test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8001/health')"]
@@ -33,7 +32,7 @@ services:
       dockerfile: Dockerfile
     container_name: agentic-backend
     ports:
-      - "8000:8000"
+      - "8088:8088"
     volumes:
       - ./backend/app:/app/app
       - ./data:/app/data
@@ -46,8 +45,9 @@ services:
       ml-service:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8000/health')"]
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8088/health')"]
       interval: 30s
+
       timeout: 10s
       retries: 3
       start_period: 5s

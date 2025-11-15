@@ -1,19 +1,8 @@
-const mockResponse = {
-    question: "Top 5 merchants",
-    sql: "SELECT merchant_name, SUM(amount) as revenue FROM transactions GROUP BY merchant_name ORDER BY revenue DESC LIMIT 5",
-    results: [
-      { merchant_name: "Yandex", revenue: 1500000 },
-      { merchant_name: "Silk Pay", revenue: 1200000 },
-      { merchant_name: "Kaspi", revenue: 950000 },
-      { merchant_name: "Halyk", revenue: 720000 },
-      { merchant_name: "Beeline", revenue: 680000 }
-    ],
-    columns: ["merchant_name", "revenue"]
-  };
-  
+const API_URL = "http://localhost:8088";
+
   const chat = document.getElementById("chat-container");
   const input = document.getElementById("user-input");
-  
+
   function addMessage(text, sender) {
     const msg = document.createElement("div");
     msg.classList.add("msg", sender);
@@ -21,21 +10,46 @@ const mockResponse = {
     chat.appendChild(msg);
     chat.scrollTop = chat.scrollHeight;
   }
-  
-  function sendMessage() {
+
+  async function sendMessage() {
     const text = input.value.trim();
     if (!text) return;
-  
+
     addMessage(text, "user");
     input.value = "";
-  
-    addMessage("Thinking...", "bot");
-  
-    setTimeout(() => {
+
+    const thinkingMsg = addMessage("Thinking...", "bot");
+
+    try {
+      const response = await fetch(`${API_URL}/query`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ text: text })
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      // Remove "Thinking..." message
       chat.removeChild(chat.lastChild);
-      addMessage("Here are the top merchants:", "bot");
-      showResultsInChat(mockResponse);
-    }, 800);
+
+      if (data.error) {
+        addMessage(`Error: ${data.error}`, "bot");
+      } else if (data.results && data.results.length > 0) {
+        showResultsInChat(data);
+      } else {
+        addMessage("No results found for your query.", "bot");
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      chat.removeChild(chat.lastChild);
+      addMessage(`Error connecting to server: ${error.message}`, "bot");
+    }
   }
   
   function showResultsInChat(data) {

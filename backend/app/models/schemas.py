@@ -1,4 +1,5 @@
 from typing import Any, Dict, List, Optional
+from datetime import datetime
 
 from pydantic import BaseModel, Field
 
@@ -17,11 +18,11 @@ class QueryRequest(BaseModel):
 class QueryResponse(BaseModel):
 	question: str = Field(..., description="The original question text")
 	sql: Optional[str] = Field(None, description="The generated SQL query, if applicable")
-	result: List[Dict[str, Any]] = Field(..., description="The result of the query execution")
+	results: List[Dict[str, Any]] = Field(default_factory=list, description="The result of the query execution")
 	columns: List[str] = Field (default_factory = list, description = "Names of the columns in the result set")
 	row_count: int = Field (0, description = "Count of rows in the result set")
 	execution_time: Optional[float] = Field (None, description = "Execution time of the query in seconds")
-	error: Optional[str] = Field (None, description = "")
+	error: Optional[str] = Field (None, description = "Error message if query failed")
 
 	class Config:
 		json_schema_extra = {
